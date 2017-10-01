@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Engine;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateEngineRequest;
+use App\Http\Requests\UpdateEngineRequest;
 
 class EngineController extends Controller
 {
@@ -13,7 +17,9 @@ class EngineController extends Controller
      */
     public function index()
     {
-        //
+        $engine = Engine::all();
+
+        return view('engines.list', ["engine" => $engine]);
     }
 
     /**
@@ -23,7 +29,7 @@ class EngineController extends Controller
      */
     public function create()
     {
-        //
+        return view('engines/create');
     }
 
     /**
@@ -32,9 +38,13 @@ class EngineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateEngineRequest $request)
     {
-        //
+        $engine = new Engine;
+        $engine->engine = $request->engine;
+        $engine->save();
+
+        return redirect('engines')->with('status', 'Create succesfully');
     }
 
     /**
@@ -45,7 +55,7 @@ class EngineController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('engines.show', ['engine' => Engine::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +66,9 @@ class EngineController extends Controller
      */
     public function edit($id)
     {
-        //
+        $engine = Engine::findOrFail($id);
+
+        return view('engines.edit', ["engine" => $engine]);
     }
 
     /**
@@ -66,9 +78,13 @@ class EngineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEngineRequest $request, $id)
     {
-        //
+        $engine = Engine::findOrFail($id);
+        $engine->engine = $request->engine;
+        $engine->save();
+
+        return redirect('engines')->with('status', 'Update succesed!');
     }
 
     /**
@@ -79,6 +95,9 @@ class EngineController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $engine = Engine::findOrFail($id);
+        $engine->delete();
+
+        return redirect('engines')->with('status', 'Engine was deleted!');
     }
 }

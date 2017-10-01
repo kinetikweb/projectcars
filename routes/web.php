@@ -26,3 +26,11 @@ Route::get('/brands/{id}', 'BrandController@show');
 Route::get('/brands/{id}/edit', 'BrandController@edit')->middleware('admin');
 Route::put('/brands/{id}', 'BrandController@update')->middleware('admin');
 Route::delete('/brands/{id}', 'BrandController@destroy')->middleware('admin');
+
+Route::get('/engines', 'EngineController@index');
+Route::get('/engines/create', 'EngineController@create')->middleware('admin');
+Route::post('/engines', 'EngineController@store')->middleware('admin');
+Route::get('/engines/{id}', 'EngineController@show');
+Route::get('/engines/{id}/edit', 'EngineController@edit')->middleware('admin');
+Route::put('/engines/{id}', 'EngineController@update')->middleware('admin');
+Route::delete('/engines/{id}', 'EngineController@destroy')->middleware('admin');
