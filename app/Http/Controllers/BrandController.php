@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Brand;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 
 class BrandController extends Controller
 {
@@ -13,7 +17,9 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brand = Brand::all();
+
+        return view('brand.list', ["brand" => $brand]);
     }
 
     /**
@@ -23,7 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('brand.create');
     }
 
     /**
@@ -32,9 +38,13 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBrandRequest $request)
     {
-        //
+        $brand = new Brand;
+        $brand->brand = $request->brand;
+        $brand->save();
+
+        return redirect('brands')->with('status', 'Create succesfully');
     }
 
     /**
@@ -45,7 +55,7 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('brand.show', ['brand' => Brand::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +66,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+
+        return view('brand.edit', ["brand" => $brand]);
     }
 
     /**
@@ -66,9 +78,13 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBrandRequest $request, $id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        $brand->brand = $request->brand;
+        $brand->save();
+
+        return redirect('brands')->with('status', 'Update succesed!');
     }
 
     /**
@@ -79,6 +95,9 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+
+        return redirect('brands')->with('status', 'Brand was deleted!');
     }
 }
