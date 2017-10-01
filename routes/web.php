@@ -34,3 +34,11 @@ Route::get('/engines/{id}', 'EngineController@show');
 Route::get('/engines/{id}/edit', 'EngineController@edit')->middleware('admin');
 Route::put('/engines/{id}', 'EngineController@update')->middleware('admin');
 Route::delete('/engines/{id}', 'EngineController@destroy')->middleware('admin');
+
+Route::get('/colors', 'ColorController@index');
+Route::get('/colors/create', 'ColorController@create')->middleware('admin');
+Route::post('/colors', 'ColorController@store')->middleware('admin');
+Route::get('/colors/{id}', 'ColorController@show');
+Route::get('/colors/{id}/edit', 'ColorController@edit')->middleware('admin');
+Route::put('/colors/{id}', 'ColorController@update')->middleware('admin');
+Route::delete('/colors/{id}', 'ColorController@destroy')->middleware('admin');

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Color;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateColorRequest;
+use App\Http\Requests\UpdateColorRequest;
 
 class ColorController extends Controller
 {
@@ -13,7 +17,9 @@ class ColorController extends Controller
      */
     public function index()
     {
-        //
+        $color = Color::all();
+
+        return view('colors.list', ["color" => $color]);
     }
 
     /**
@@ -23,7 +29,7 @@ class ColorController extends Controller
      */
     public function create()
     {
-        //
+        return view('colors.create');
     }
 
     /**
@@ -32,9 +38,13 @@ class ColorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateColorRequest $request)
     {
-        //
+        $color = new Color;
+        $color->color = $request->color;
+        $color->save();
+
+        return redirect('colors')->with('status', 'Create succesfully');
     }
 
     /**
@@ -45,7 +55,7 @@ class ColorController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('colors.show', ['color' => Color::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +66,9 @@ class ColorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $color = Color::findOrFail($id);
+
+        return view('colors.edit', ["color" => $color]);
     }
 
     /**
@@ -66,9 +78,13 @@ class ColorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateColorRequest $request, $id)
     {
-        //
+        $color = Color::findOrFail($id);
+        $color->color = $request->color;
+        $color->save();
+
+        return redirect('colors')->with('status', 'Update succesed!');
     }
 
     /**
@@ -79,6 +95,9 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $color = Color::findOrFail($id);
+        $color->delete();
+
+        return redirect('colors')->with('status', 'Color was deleted!');
     }
 }
