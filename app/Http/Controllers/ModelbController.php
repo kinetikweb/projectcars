@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Modelb;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CreateModelbRequest;
+use App\Http\Requests\UpdateModelbRequest;
 
 class ModelbController extends Controller
 {
@@ -13,7 +19,14 @@ class ModelbController extends Controller
      */
     public function index()
     {
-        //
+        $brand = DB::table('brands')->get();
+
+        $modelb = DB::table('modelbs')
+                    ->join('brands', 'modelbs.brand_id', '=', 'brands.id')
+                    ->select('modelbs.*', 'brands.brand AS brand')
+                    ->get();
+
+        return view('models_brand.list', ["modelb" => $modelb, "brand" => $brand]);
     }
 
     /**
@@ -23,7 +36,9 @@ class ModelbController extends Controller
      */
     public function create()
     {
-        //
+        $brand = DB::table('brands')->get();
+
+        return view('models_brand.create', ["brand" => $brand]);
     }
 
     /**
@@ -32,9 +47,14 @@ class ModelbController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateModelbRequest $request)
     {
-        //
+        $modelb = new Modelb;
+        $modelb->modelb = $request->modelb;
+        $modelb->brand_id = $request->brand_id;
+        $modelb->save();
+
+        return redirect('models')->with('status', 'Create succesfully');
     }
 
     /**
@@ -45,7 +65,7 @@ class ModelbController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('models_brand.show', ['modelb' => Modelb::findOrFail($id)]);
     }
 
     /**
@@ -56,7 +76,9 @@ class ModelbController extends Controller
      */
     public function edit($id)
     {
-        //
+        $modelb = Modelb::findOrFail($id);
+
+        return view('models_brand.edit', ["modelb" => $modelb]);
     }
 
     /**
@@ -66,9 +88,14 @@ class ModelbController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateModelbRequest $request, $id)
     {
-        //
+        $modelb = Modelb::findOrFail($id);
+        $modelb->modelb = $request->modelb;
+        $modelb->brand_id = $request->brand_id;
+        $modelb->save();
+
+        return redirect('models')->with('status', 'Update succesed!');
     }
 
     /**
@@ -79,6 +106,9 @@ class ModelbController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modelb = Modelb::findOrFail($id);
+        $modelb->delete();
+
+        return redirect('models')->with('status', 'Model was deleted!');
     }
 }

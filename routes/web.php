@@ -42,3 +42,11 @@ Route::get('/colors/{id}', 'ColorController@show');
 Route::get('/colors/{id}/edit', 'ColorController@edit')->middleware('admin');
 Route::put('/colors/{id}', 'ColorController@update')->middleware('admin');
 Route::delete('/colors/{id}', 'ColorController@destroy')->middleware('admin');
+
+Route::get('/models', 'ModelbController@index');
+Route::get('/models/create', 'ModelbController@create')->middleware('admin');
+Route::post('/models', 'ModelbController@store')->middleware('admin');
+Route::get('/models/{id}', 'ModelbController@show');
+Route::get('/models/{id}/edit', 'ModelbController@edit')->middleware('admin');
+Route::put('/models/{id}', 'ModelbController@update')->middleware('admin');
+Route::delete('/models/{id}', 'ModelbController@destroy')->middleware('admin');

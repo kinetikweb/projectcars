@@ -15,7 +15,7 @@ class CreateModelbsTable extends Migration
     {
         Schema::create('modelbs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('model', 100)->unique();
+            $table->string('modelb', 100)->unique();
             $table->integer('brand_id')->unsigned();
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();
