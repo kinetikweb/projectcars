@@ -17,7 +17,7 @@ class Car extends Model
     /**
      * Get the modelbrand that owns the car.
      */
-    public function modelbrand()
+    public function modelb()
     {
         return $this->belongsTo('App\Modelb');
     }

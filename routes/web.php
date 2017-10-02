@@ -50,3 +50,11 @@ Route::get('/models/{id}', 'ModelbController@show');
 Route::get('/models/{id}/edit', 'ModelbController@edit')->middleware('admin');
 Route::put('/models/{id}', 'ModelbController@update')->middleware('admin');
 Route::delete('/models/{id}', 'ModelbController@destroy')->middleware('admin');
+
+Route::get('/cars', 'CarController@index');
+Route::get('/cars/create', 'CarController@create')->middleware('admin');
+Route::post('/cars', 'CarController@store')->middleware('admin');
+Route::get('/cars/{id}', 'CarController@show');
+Route::get('/cars/{id}/edit', 'CarController@edit')->middleware('admin');
+Route::put('/cars/{id}', 'CarController@update')->middleware('admin');
+Route::delete('/cars/{id}', 'CarController@destroy')->middleware('admin');
