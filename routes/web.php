@@ -12,8 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/cars/search');
 });
+
+Route::get('/cars/search', 'SearchController@searchForm');
+Route::post('/cars/search', 'SearchController@searchResult');
 
 Auth::routes();
 

@@ -6,7 +6,7 @@
 
     <ul class="dropdown-menu" role="menu">
         <li>
-            <a href="{{ url('/brands') }}">Brands List
+            <a href="{{ url('/cars') }}">Cars List
             </a>
         </li>
     </ul>
