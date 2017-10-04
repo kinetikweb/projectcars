@@ -87,7 +87,7 @@
 								</td>
 							@else
 								<td>
-									<a class="btn btn-default" href="/cars/{{ $car->id }}">View</a>
+									<a class="btn btn-default" href="{{ route('login') }}">View</a>
 								</td>
 							@endif
 						</tr>

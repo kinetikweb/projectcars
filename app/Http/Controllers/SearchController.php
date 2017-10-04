@@ -42,7 +42,7 @@ class SearchController extends Controller
             if ($value !== null) {
                 switch ($key) {
                     case 'brand':
-                            $conditions['brand_id'] = $value;
+                            $conditions['brands.id'] = $value;
                         break;
                     case 'engine':
                             $conditions['engine_id'] = $value;
@@ -66,7 +66,8 @@ class SearchController extends Controller
                         'brands.brand AS brand',
                         'modelbs.modelb AS modelb',
                         'engines.engine AS engine',
-                        'colors.color AS color')->whereBetween('price',[$lowerPrice, $higherPrice])
+                        'colors.color AS color')
+                ->whereBetween('price',[$lowerPrice, $higherPrice])
                 ->where($conditions)->get();
 
         return view('search/list', ["car" => $car]);
